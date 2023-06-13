@@ -31,7 +31,7 @@
                 내가 작성한 모집글들을 한 눈에 관리하세요!
             </p>
         {% else %}
-            <h2>모집 중인 프로그램</h2>
+            <h2>전체 프로그램</h2>
             <p class="lead">
                 여기서 마음에 드는 프로그램을 찾아보시고, 관심이 있는 프로그램을 클릭해 상세 정보를 확인해보세요!
             </p>
@@ -50,14 +50,21 @@
 
     <div>
         {% for project in project_list %}
-            <div class="list-group card border-secondary" style="margin: 20px 0px 20px 0px;">
+            <div class="list-group card " style="margin: 20px 0px 20px 0px;">
                 <a href="{{ project.get_absolute_url }}"
-                   class="list-group-item list-group-item-action flex-column align-items-start">
+                   class="list-group-item list-group-item-action flex-column align-items-start bg-opacity-25
+                        {% if project.is_finish %}
+                        bg-danger
+                        {% endif %}">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ project.title }}</h5>
+                        <h5 class="mb-1">
+                            {% if project.is_finish %}
+                                [모집 완료]
+                            {% endif %}
+                            {{ project.title }}</h5>
                         <small class="text-muted">{{ project.created_at }}</small>
                     </div>
-                    <p class="mb-1">{{ project.content }}</p>
+                    <p class="mb-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ project.content }}</p>
                     <small class="text-muted"> 모집자: {{ project.author }}</small>
                 </a>
             </div>

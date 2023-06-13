@@ -83,9 +83,7 @@
                                 <h4 class="card-title">{{ project.title }}</h4>
                                 <h6 class="card-subtitle mb-2 text-muted">최종 수정일: {{ project.updated_at }}</h6>
                                 <p class="card-text">{{ project.content }}</p>
-
                                 <div>
-
                                     <div class="accordion" id="{{ forloop.counter }}accordionExample">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="{{ forloop.counter }}headingOne">
@@ -94,7 +92,11 @@
                                                         data-bs-target="#{{ forloop.counter }}collapseOne"
                                                         aria-expanded="false"
                                                         aria-controls="{{ forloop.counter }}collapseOne">
-                                                    {{ project.question1 }}
+                                                    {% if project.question1 == null %}
+                                                        첫 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        질문1: {{ project.question1 }}
+                                                    {% endif %}
                                                 </button>
                                             </h2>
                                             <div id="{{ forloop.counter }}collapseOne"
@@ -103,7 +105,11 @@
                                                  data-bs-parent="#accordionExample"
                                                  style="">
                                                 <div class="accordion-body">
-                                                    <strong>{{ application.answer1 }}</strong>
+                                                    {% if project.question1 == null %}
+                                                        첫 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        답변1: <strong>{{ application.answer1 }}</strong>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +120,11 @@
                                                         data-bs-target="#{{ forloop.counter }}collapseTwo"
                                                         aria-expanded="false"
                                                         aria-controls="{{ forloop.counter }}collapseTwo">
-                                                    {{ project.question2 }}
+                                                    {% if project.question2 == null %}
+                                                        두 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        질문2: {{ project.question2 }}
+                                                    {% endif %}
                                                 </button>
                                             </h2>
                                             <div id="{{ forloop.counter }}collapseTwo"
@@ -123,7 +133,11 @@
                                                  data-bs-parent="#accordionExample"
                                                  style="">
                                                 <div class="accordion-body">
-                                                    <strong>{{ application.answer2 }}</strong>
+                                                    {% if project.question2 == null %}
+                                                        두 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        답변2: <strong>{{ application.answer2 }}</strong>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +148,11 @@
                                                         data-bs-target="#{{ forloop.counter }}collapseThree"
                                                         aria-expanded="false"
                                                         aria-controls="{{ forloop.counter }}collapseThree">
-                                                    {{ project.question3 }}
+                                                    {% if project.question3 == null %}
+                                                        세 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        질문3: {{ project.question3 }}
+                                                    {% endif %}
                                                 </button>
                                             </h2>
                                             <div id="{{ forloop.counter }}collapseThree"
@@ -143,7 +161,11 @@
                                                  data-bs-parent="#accordionExample"
                                                  style="">
                                                 <div class="accordion-body">
-                                                    <strong>{{ application.answer3 }}</strong>
+                                                    {% if project.question3 == null %}
+                                                        세 번째 질문이 기재되지 않았습니다.
+                                                    {% else %}
+                                                        답변3: <strong>{{ application.answer3 }}</strong>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

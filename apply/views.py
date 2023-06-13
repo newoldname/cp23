@@ -65,30 +65,25 @@ class ApplicationCreate(LoginRequiredMixin, CreateView):
         form = super(ApplicationCreate, self).get_form(form_class)
 
         if self.nowProject.question1 is None:
-            form.fields["answer1"].label = "첫 번째 질문이 없습니다."
+            form.fields["answer1"].label = "첫 번째 질문이 기재되지 않았습니다."
             form.fields["answer1"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer1"].label = self.nowProject.question1
+            form.fields["answer1"].label = "질문1: " + self.nowProject.question1
+            form.fields['answer1'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         if self.nowProject.question2 is None:
-            form.fields["answer2"].label = "두 번째 질문이 없습니다."
+            form.fields["answer2"].label = "두 번째 질문이 기재되지 않았습니다."
             form.fields["answer2"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer2"].label = self.nowProject.question2
+            form.fields["answer2"].label = "질문2: " + self.nowProject.question2
+            form.fields['answer2'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         if self.nowProject.question3 is None:
-            form.fields["answer3"].label = "세 번째 질문이 없습니다."
+            form.fields["answer3"].label = "세 번째 질문이 기재되지 않았습니다."
             form.fields["answer3"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer3"].label = self.nowProject.question3
-        # form.fields["answer1"].label = self.nowProject.question1
-        # form.fields["answer2"].widget.attrs["hidden"] = ""
-        # form.fields['title'].widget.attrs["placeholder"] = '프로그램의 이름을 알려주세요'
-        # form.fields['content'].widget.attrs["placeholder"] = '어떤 프로그램을 하고 싶은 지 알려주세요'
-        # form.fields['information'].widget.attrs['placeholder'] = '선발된 지원자에게 보여줄 메시지입니다. 전화번호, 오픈카톡 채팅방 링크 등 자유롭게 작성하세요.'
-        # form.fields['question1'].widget.attrs['placeholder'] = '지원자에게 궁금한 부분을 물어보세요. '
-        # form.fields['question2'].widget.attrs['placeholder'] = '지원자에게 궁금한 부분을 물어보세요. '
-        # form.fields['question3'].widget.attrs['placeholder'] = '지원자에게 궁금한 부분을 물어보세요. '
+            form.fields["answer3"].label = "질문3: " + self.nowProject.question3
+            form.fields['answer3'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         return form
 
@@ -125,22 +120,25 @@ class ApplicationUpdate(LoginRequiredMixin, UpdateView):
         form = super(ApplicationUpdate, self).get_form(form_class)
 
         if self.nowProject.question1 is None:
-            form.fields["answer1"].label = "첫 번째 질문이 없습니다."
+            form.fields["answer1"].label = "첫 번째 질문이 기재되지 않았습니다."
             form.fields["answer1"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer1"].label = self.nowProject.question1
+            form.fields["answer1"].label = "질문1: " + self.nowProject.question1
+            form.fields['answer1'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         if self.nowProject.question2 is None:
-            form.fields["answer2"].label = "두 번째 질문이 없습니다."
+            form.fields["answer2"].label = "두 번째 질문이 기재되지 않았습니다."
             form.fields["answer2"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer2"].label = self.nowProject.question2
+            form.fields["answer2"].label = "질문2: " + self.nowProject.question2
+            form.fields['answer2'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         if self.nowProject.question3 is None:
-            form.fields["answer3"].label = "세 번째 질문이 없습니다."
+            form.fields["answer3"].label = "세 번째 질문이 기재되지 않았습니다."
             form.fields["answer3"].widget.attrs["hidden"] = ""
         else:
-            form.fields["answer3"].label = self.nowProject.question3
+            form.fields["answer3"].label = "질문3: " + self.nowProject.question3
+            form.fields['answer3'].widget.attrs["style"] = 'margin: 10px 0px 10px 0px'
 
         return form
 

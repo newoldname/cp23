@@ -14,27 +14,30 @@
         </p>
     </div>
 
-    <div class="card mb-3 ">
-        <h3 class="card-header ">프로그램명: <strong>{{ project.title }}</strong></h3>
+    <div class="card mb-3
+        {% if project.is_finish %}
+        bg-danger bg-opacity-25
+        {% endif %}">
+        <h3 class="card-header ">프로그램명: {% if project.is_finish %}[모집 완료] {% endif %}<strong>{{ project.title }}</strong></h3>
         <div class="card-body">
             <p class="card-text">프로그램 상세 설명: <br/> <strong>{{ project.content }}</strong></p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li class="list-group-item  {% if project.is_finish %} bg-danger bg-opacity-25 {% endif %} ">
                 {% if project.question1 != null %}
                     지원 질문1:<strong>{{ project.question1 }}</strong>
                 {% else %}
                     첫 번째 질문이 기재되지 않았습니다.
                 {% endif %}
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item  {% if project.is_finish %} bg-danger bg-opacity-25 {% endif %} ">
                 {% if project.question2 != null %}
                     지원 질문2: <strong>{{ project.question2 }}</strong>
                 {% else %}
                     두 번째 질문이 기재되지 않았습니다.
                 {% endif %}
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item  {% if project.is_finish %} bg-danger bg-opacity-25 {% endif %} ">
                 {% if project.question3 != null %}
                     지원 질문3: <strong>{{ project.question3 }}</strong>
                 {% else %}
