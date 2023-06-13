@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block main_area %}
+    <script>
+        {% if isMine == "True" %}
+            window.onload = function () {
+                nowMyMeeting()
+
+                if ({% if user.is_authenticated %}
+                    false
+                {% else %}
+                    true
+                {% endif %}
+            )
+                {
+                    location.href =
+                        "/accounts/login/?next=/meeting/my/"
+                }
+            }
+        {% else %}
+            window.onload = function () {
+                nowMeeting()
+            }
+        {% endif %}
+
+    </script>
+
+    <div>
+        {% if isMine == "True" %}
+            <h2>내 프로그램</h2>
+            <p class="lead">
+                내가 작성한 모집글들을 한 눈에 관리하세요!
+            </p>
+        {% else %}
+            <h2>모집 중인 프로그램</h2>
+            <p class="lead">
+                여기서 마음에 드는 프로그램을 찾아보시고, 관심이 있는 프로그램을 클릭해 상세 정보를 확인해보세요!
+            </p>
+        {% endif %}
+        {#    페이지 소개#}
+
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="d-grid gap-2" style="margin: 10px 0px 20px 0px">
+            <button class="btn btn-lg btn-primary" type="button" onclick="location.href='/meeting/create/'">새로운 모집글
+                작성하기!
+            </button>
+        </div>
+    {% endif %}
+
+    <div>
+        {% for project in project_list %}
+            <div class="list-group card border-secondary" style="margin: 20px 0px 20px 0px;">
+                <a href="{{ project.get_absolute_url }}"
+                   class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ project.title }}</h5>
+                        <small class="text-muted">{{ project.created_at }}</small>
+                    </div>
+                    <p class="mb-1">{{ project.content }}</p>
+                    <small class="text-muted"> 모집자: {{ project.author }}</small>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

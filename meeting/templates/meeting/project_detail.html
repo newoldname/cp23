@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block main_area %}
+    <script>
+        window.onload = function () {
+            nowMeeting()
+        }
+    </script>
+
+    <div>
+        {#    페이지 소개#}
+        <h2>해당 프로그램 상세정보</h2>
+        <p class="lead">
+            프로그램의 상세정보를 확인하세요!
+        </p>
+    </div>
+
+    <div class="card mb-3 ">
+        <h3 class="card-header ">프로그램명: <strong>{{ project.title }}</strong></h3>
+        <div class="card-body">
+            <p class="card-text">프로그램 상세 설명: <br/> <strong>{{ project.content }}</strong></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                {% if project.question1 != null %}
+                    지원 질문1:<strong>{{ project.question1 }}</strong>
+                {% else %}
+                    첫 번째 질문이 기재되지 않았습니다.
+                {% endif %}
+            </li>
+            <li class="list-group-item">
+                {% if project.question2 != null %}
+                    지원 질문2: <strong>{{ project.question2 }}</strong>
+                {% else %}
+                    두 번째 질문이 기재되지 않았습니다.
+                {% endif %}
+            </li>
+            <li class="list-group-item">
+                {% if project.question3 != null %}
+                    지원 질문3: <strong>{{ project.question3 }}</strong>
+                {% else %}
+                    세 번째 질문이 기재되지 않았습니다.
+                {% endif %}
+            </li>
+        </ul>
+
+        <div class="card-footer text-end">
+            최종 수정: {{ project.updated_at }}
+        </div>
+    </div>
+
+    {% if project.is_finish %}
+
+    {% elif user.is_authenticated and user == project.author and not project.is_finish %}
+        <div class="d-grid gap-2" style="margin: 10px 0px 10px 0px">
+            <button class="btn btn-lg btn-primary" type="button"
+                    onclick="location.href='/meeting/update/{{ project.pk }}'">모집글 수정하기
+            </button>
+        </div>
+
+        <div class="d-grid gap-2" style="margin: 10px 0px 20px 0px">
+            <button class="btn btn-lg btn-primary" type="button"
+                    onclick="location.href='/apply/choose/{{ project.pk }}'">지원자 선택하기
+            </button>
+        </div>
+
+    {% elif user.is_authenticated %}
+        <div class="d-grid gap-2" style="margin: 10px 0px 20px 0px">
+            <button class="btn btn-lg btn-primary" type="button"
+                    onclick="location.href='/apply/create/{{ project.pk }}/'">바로 지원하기!
+            </button>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

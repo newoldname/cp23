@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block main_area %}
+    <script>
+        window.onload = function () {
+            nowMeeting()
+        }
+    </script>
+
+    <h1> 새로운 모집글 추가</h1>
+    <hr/>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <table>
+            {{ form | crispy}} </table>
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </form>
+    {{ form.media }}
+{% endblock %}

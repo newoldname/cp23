@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block main_area %}
+    <script>
+        window.onload = function () {
+            nowMyApply()
+            {#nowProject()#}
+        }
+    </script>
+
+    <div>
+        {#    페이지 소개#}
+        <h2>지원자 선택하기</h2>
+        <p class="lead">
+            해당 프로그램을 지원하는 사람들의 지원서를 보고 지원자를 선택하세요!
+        </p>
+    </div>
+
+    <div class="card mb-3 ">
+        <h3 class="card-header ">프로그램명: <strong>{{ project.title }}</strong></h3>
+        <div class="card-body">
+            <p class="card-text">프로그램 상세 설명: <br/> <strong>{{ project.content }}</strong></p>
+        </div>
+        <div class="card-footer text-end">
+            최종 수정: {{ project.updated_at }}
+        </div>
+    </div>
+
+    <form method="post" id="selected"> {% csrf_token %}
+        <div>
+            <script>
+                function switchStateChanged(switchId) {
+                    // 스위치 상태 변경 시 실행할 함수 내용을 여기에 작성합니다.
+                    const switchElement = document.getElementById(switchId);
+
+                    if (switchElement.checked) {
+                        console.log(`스위치 ${switchId}가 체크되었습니다.`);
+                        document.getElementById(switchId + "Application").setAttribute("class", "rounded-3 text-white bg-success bg-opacity-75")
+                        document.getElementById(switchId + "Application").getElementsByTagName("h4")[0].innerHTML = "해당 지원자를 선택하셨습니다!"
+                        switchElement.setAttribute("value", "true")
+                    } else {
+                        console.log(`스위치 ${switchId}가 체크 해제되었습니다.`);
+                        document.getElementById(switchId + "Application").setAttribute("class", "rounded-3 text-white bg-info bg-opacity-75")
+                        document.getElementById(switchId + "Application").getElementsByTagName("h4")[0].innerHTML = "지원자를 마음에 들면 오른쪽 스위치로 지원자를 선택하세요!"
+                        switchElement.setAttribute("value", "false")
+
+                    }
+                }
+            </script>
+            {% for application_pk, application in application_list.items %}
+                <div class=" rounded-3 text-white bg-info bg-opacity-75"
+                     style="margin: 10px 20px 20px 0px; padding: 20px"
+                     id="{{ forloop.counter }}flexSwitchCheckDefaultApplication">
+                    <div class="text-white card-title" style="margin: auto; display: flex">
+                        <h4 class="text-white card-title" style="margin: auto;width: 80%">
+                            지원자를 마음에 들면 오른쪽 스위치로 지원자를 선택하세요!
+                        </h4>
+
+                        <div class="form-check-reverse form-switch" style="width: 20%;margin: auto">
+                            <input class="form-check-input" type="checkbox"
+                                   id="{{ forloop.counter }}flexSwitchCheckDefault"
+                                   onclick="switchStateChanged('{{ forloop.counter }}flexSwitchCheckDefault')"
+                                   name={{ application_pk }} value="false">
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0px 0px 0px">
+                        <div class="card">
+                            <div>
+                                <div>
+                                    <div class="accordion" id="{{ forloop.counter }}accordionExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingOne">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseOne"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseOne">
+                                                    {{ project.question1 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseOne"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingOne"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer1 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingTwo">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseTwo"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseTwo">
+                                                    {{ project.question2 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseTwo"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingTwo"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer2 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingThree">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseThree"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseThree">
+                                                    {{ project.question3 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseThree"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingThree"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer3 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endfor %}
+        </div>
+
+        <div class="d-grid gap-2" style="margin: 10px 0px 20px 0px">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                선택한 지원자를 확정하고 프로그램 모집을 종료하기!
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">최종 확인</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            프로그램 모집이 완료되면 다시 <strong>취소할 수 없으며</strong>, 선발된 지원자들은 <strong>즉시 선발 메시지를 볼 수 있습니다</strong>.
+                            현재
+                            선택한 지원자를 확정하고 프로그램 모집을 종료하시겠습니까?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-primary" onclick="send()">확인</button>
+                            <script>
+                                function send() {
+                                    document.getElementById("selected").submit()
+                                }
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

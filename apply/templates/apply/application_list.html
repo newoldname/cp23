@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block main_area %}
+    <script>
+        window.onload = function () {
+            nowMyApply()
+            {#nowProject()#}
+        }
+    </script>
+
+    <div>
+        {#    페이지 소개#}
+        <h2>내 지원서</h2>
+        <p class="lead">
+            내가 지원한 프로그램들을 한 번에 볼 수 있어요
+        </p>
+    </div>
+
+    <div>
+        {% for application, project in application_list.items %}
+            <div class=" rounded-3 text-white
+                            {% if project.is_finish and application.is_apply %}
+                                bg-success bg-opacity-100
+                            {% elif  project.is_finish and not application.is_apply %}
+                                bg-danger bg-opacity-100
+                            {% else %}
+                                bg-info bg-opacity-75
+                            {% endif %}
+                        " style="margin: 10px 20px 20px 0px; padding: 20px">
+                <div class="text-white card-title" style="margin: auto; display: flex">
+                    {% if project.is_finish and application.is_apply %}
+                        <h4 class="text-white card-title" style="margin: auto;width: 80%">
+                            해당 프로그램에 선발되셨습니다! <br/> "메시지 보기" 버튼을 클릭해 모집자의 합격 메시지를 확인하세요!
+                        </h4>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-light btn-lg" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" style="width: 20%">
+                            메시지 보기
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">합격 메시지</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        {{ project.information }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% elif  project.is_finish and not application.is_apply %}
+                        <h4 class="text-white card-title" style="margin: auto">
+                            아쉽지만 해당 프로그램에 선발되지 않으셨습니다.
+                        </h4>
+                    {% else %}
+                        <h4 class="text-white card-title" style="margin: auto;width: 80%">
+                            프로그램 모집 마감 전입니다. <br/> "수정하기" 버튼을 클릭해 지원서를 수정할 수 있어요!
+                        </h4>
+
+                        <button type="button" class="btn btn-light btn-lg" style="width: 20%"
+                                onclick='location.href="/apply/update/{{ application.pk }}"'>수정하기
+                        </button>
+
+                    {% endif %}
+
+                </div>
+
+                <div style="margin: 15px 0px 0px 0px">
+                    <div class="card">
+                        <div>
+                            <div class="card-body">
+                                <h4 class="card-title">{{ project.title }}</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">최종 수정일: {{ project.updated_at }}</h6>
+                                <p class="card-text">{{ project.content }}</p>
+
+                                <div>
+
+                                    <div class="accordion" id="{{ forloop.counter }}accordionExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingOne">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseOne"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseOne">
+                                                    {{ project.question1 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseOne"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingOne"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer1 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingTwo">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseTwo"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseTwo">
+                                                    {{ project.question2 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseTwo"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingTwo"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer2 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="{{ forloop.counter }}headingThree">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ forloop.counter }}collapseThree"
+                                                        aria-expanded="false"
+                                                        aria-controls="{{ forloop.counter }}collapseThree">
+                                                    {{ project.question3 }}
+                                                </button>
+                                            </h2>
+                                            <div id="{{ forloop.counter }}collapseThree"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="{{ forloop.counter }}headingThree"
+                                                 data-bs-parent="#accordionExample"
+                                                 style="">
+                                                <div class="accordion-body">
+                                                    <strong>{{ application.answer3 }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <script>
+        function reset(indexNumber) {
+            document.getElementById(`${indexNumber}tabproject`).setAttribute("aria-selected", "false")
+            document.getElementById(`${indexNumber}tabproject`).setAttribute("tabindex", "-1")
+            document.getElementById(`${indexNumber}tabproject`).className = "nav-link"
+            document.getElementById(`${indexNumber}project`).className = "tab-pane fade"
+
+            document.getElementById(`${indexNumber}tabquestion1`).setAttribute("aria-selected", "false")
+            document.getElementById(`${indexNumber}tabquestion1`).setAttribute("tabindex", "-1")
+            document.getElementById(`${indexNumber}tabquestion1`).className = "nav-link"
+            document.getElementById(`${indexNumber}question1`).className = "tab-pane fade"
+
+            document.getElementById(`${indexNumber}tabquestion2`).setAttribute("aria-selected", "false")
+            document.getElementById(`${indexNumber}tabquestion2`).setAttribute("tabindex", "-1")
+            document.getElementById(`${indexNumber}tabquestion2`).className = "nav-link"
+            document.getElementById(`${indexNumber}question2`).className = "tab-pane fade"
+
+            document.getElementById(`${indexNumber}tabquestion3`).setAttribute("aria-selected", "false")
+            document.getElementById(`${indexNumber}tabquestion3`).setAttribute("tabindex", "-1")
+            document.getElementById(`${indexNumber}tabquestion3`).className = "nav-link"
+            document.getElementById(`${indexNumber}question3`).className = "tab-pane fade"
+
+        }
+
+        function nowProject(indexNumber) {
+            reset(indexNumber)
+            //tab 부분
+            document.getElementById(`${indexNumber}tabproject`).className = "nav-link active"
+            document.getElementById(`${indexNumber}tabproject`).setAttribute("aria-selected", "true")
+            document.getElementById(`${indexNumber}tabproject`).removeAttribute("tabindex")
+            document.getElementById(`${indexNumber}project`).className = "tab-pane fade active show"
+
+        }
+
+        function nowQuestion1(indexNumber) {
+            reset(indexNumber)
+            //tab 부분
+            document.getElementById(`${indexNumber}tabquestion1`).className = "nav-link active"
+            document.getElementById(`${indexNumber}tabquestion1`).setAttribute("aria-selected", "true")
+            document.getElementById(`${indexNumber}tabquestion1`).removeAttribute("tabindex")
+            document.getElementById(`${indexNumber}question1`).className = "tab-pane fade active show"
+
+        }
+
+        function nowQuestion2(indexNumber) {
+            reset(indexNumber)
+            //tab 부분
+            document.getElementById(`${indexNumber}tabquestion2`).className = "nav-link active"
+            document.getElementById(`${indexNumber}tabquestion2`).setAttribute("aria-selected", "true")
+            document.getElementById(`${indexNumber}tabquestion2`).removeAttribute("tabindex")
+            document.getElementById(`${indexNumber}question2`).className = "tab-pane fade active show"
+        }
+
+        function nowQuestion3(indexNumber) {
+            reset(indexNumber)
+            //tab 부분
+            document.getElementById(`${indexNumber}tabquestion3`).className = "nav-link active"
+            document.getElementById(`${indexNumber}tabquestion3`).setAttribute("aria-selected", "true")
+            document.getElementById(`${indexNumber}tabquestion3`).removeAttribute("tabindex")
+            document.getElementById(`${indexNumber}question3`).className = "tab-pane fade active show"
+        }
+    </script>
+
+
+{% endblock %}
