@@ -23,11 +23,14 @@
             <form class="d-flex">
                 {% if user.is_authenticated %}
                     <a class="btn btn-secondary my-2 my-sm-0" href="/accounts/logout/">로그아옷
-                        </a>
+                    </a>
 
                 {% else %}
-                        <a class="btn btn-secondary my-2 my-sm-0" href="/accounts/login/">로그인
-                        </a>
+                    <a class="btn btn-secondary my-2 my-sm-0" href="/accounts/signup/">회원가입
+                    </a>
+                    <a class="btn btn-secondary my-2 my-sm-0" href="/accounts/login/" style="margin: 0px 10px 0px 10px">로그인
+                    </a>
+
 
                 {% endif %}
             </form>

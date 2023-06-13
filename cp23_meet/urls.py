@@ -19,9 +19,10 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("accounts/", include("accounts.urls")),  # new
     path("accounts/", include("django.contrib.auth.urls")),  # new
     path('meeting/', include('meeting.urls')),
     path('apply/', include('apply.urls')),
-    path('admin/', admin.site.urls),
     path("", RedirectView.as_view(url='meeting/'))
 ]
